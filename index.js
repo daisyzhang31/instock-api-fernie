@@ -1,9 +1,15 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const warehouseRoutes = require("./routes/warehouse");
+const PORT = process.env.PORT || 5050;
 
+app.get("/", (req, res) => {
+  res.send("Welcome to my API");
+});
 
-const PORT = process.env.PORT;
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.use("/warehouses", warehouseRoutes);
+
+app.listen(PORT, () => {
+  console.log(`running at http://localhost:${PORT}`);
 });

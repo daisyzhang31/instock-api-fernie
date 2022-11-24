@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 app.use("/warehouses", warehouseRoutes);
 app.use("/inventories", inventoryRoutes);
 
+
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);
 });

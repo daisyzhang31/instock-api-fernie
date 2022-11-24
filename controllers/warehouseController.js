@@ -10,7 +10,7 @@ exports.index = (_req, res) => {
     );
 };
 
-exports.inventoriesById = async (req, res) => {
+exports.inventoriesByWarehouseId = async (req, res) => {
   try {
     const { id } = req.params;
     const inventoriesData = await knex("inventories").where("warehouse_id", id);

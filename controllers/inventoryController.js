@@ -10,3 +10,13 @@ exports.index = (_req, res) => {
       res.status(400).send(`Error retrieving inventories: ${err}`)
     );
 };
+exports.inventoriesById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const inventoriesData = await knex("inventories").where("id", id);
+
+    res.status(200).json({ inventoriesData });
+  } catch (err) {
+    res.status(400).send(`Error retrieving data: ${err}`);
+  }
+};

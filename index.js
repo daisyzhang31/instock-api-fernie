@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 5050;
 const warehouseRoutes = require("./routes/warehouse");
 const inventoryRoutes = require("./routes/inventory");
 const { updateInventory } = require("./controllers/inventoryController");
+
 app.use(cors());
 app.get("/", (req, res) => {
   res.send("Welcome to my API");

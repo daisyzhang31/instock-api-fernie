@@ -2,8 +2,6 @@ const router = require("express").Router();
 const warehouseController = require("../controllers/warehouseController");
 
 
-.put(warehouseController.updateWarehouse);
-=======
 router
 .route("/")
 .get(warehouseController.index)

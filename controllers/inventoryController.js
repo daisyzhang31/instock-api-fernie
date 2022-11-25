@@ -22,6 +22,35 @@ exports.inventoriesById = async (req, res) => {
   }
 };
 
+exports.addInventory = (req, res) => {
+  if (
+    !req.body.warehouse_id ||
+    !req.body.item_name ||
+    !req.body.description ||
+    !req.body.category ||
+    !req.body.status
+  ) {
+    return res
+      .status(400)
+      .send(
+        "Please make sure to provide warehouse_name, item-name,description,category,and status in a request"
+      );
+  }
+
+  const newInventoryId = uuidv4();
+  knex("inventories")
+    .insert({ ...req.body, id: newInventoryId })
+    .then((_data) => {
+      knex("inventories")
+        .where({ id: newInventoryId })
+        .then((data) => {
+          res.status(201).json(data[0]);
+        });
+    })
+    .catch((err) => res.status(400).send(`Error creating Inventory: ${err}`));
+};
+
+
 // exports.updateInventory = (req, res) => {
 //   if (
 //     !req.body.id ||

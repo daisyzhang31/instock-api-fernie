@@ -23,24 +23,6 @@ exports.inventoriesById = async (req, res) => {
 };
 
 exports.updateInventory = (req, res) => {
-  if (
-    !req.body.id ||
-    !req.body.warehouse_id ||
-    !req.body.item_name ||
-    !req.body.description ||
-    !req.body.category ||
-    !req.body.status ||
-    !req.body.quantity ||
-    !req.body.created_at ||
-    !req.body.updated_at
-  ) {
-    return res
-      .status(400)
-      .send(
-        "Please make sure to provide warehouse_name, address, city, country, contact_name, contact_position, contact_phone and contact_email fields in a request"
-      );
-  }
-  knex("inventories");
   const obj = {
     id: req.body.id,
     warehouse_id: req.body.warehouse_id,
@@ -49,9 +31,8 @@ exports.updateInventory = (req, res) => {
     category: req.body.category,
     status: req.body.status,
     quantity: req.body.quantity,
-    created_at: req.body.created_at,
-    updated_at: req.body.updated_at,
-  }
+  };
+  knex("inventories")
     .update(obj)
     .where({ id: req.params.id })
     .then((_data) => {
@@ -62,6 +43,6 @@ exports.updateInventory = (req, res) => {
         });
     })
     .catch((err) =>
-      res.status(400).send(`Error updating Warehouse ${req.params.id} ${err}`)
+      res.status(400).send(`Error updating Inventory ${req.params.id} ${err}`)
     );
 };

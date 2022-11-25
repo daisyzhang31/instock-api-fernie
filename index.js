@@ -9,6 +9,9 @@ const inventoryRoutes = require("./routes/inventory");
 app.get("/", (req, res) => {
   res.send("Welcome to my API");
 });
+
+app.use(express.json());
+
 app.use(cors());
 app.use("/warehouses", warehouseRoutes);
 app.use("/inventories", inventoryRoutes);

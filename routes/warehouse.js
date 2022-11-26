@@ -10,10 +10,12 @@ router
 router
   .route("/:id/inventories")
   .get(warehouseController.inventoriesByWarehouseId);
+
+  
 router.route("/:id")
 .get(warehouseController.warehouseById)
-.put(warehouseController.updateWarehouse);
-
+.put(warehouseController.updateWarehouse)
+.delete(warehouseController.deleteWarehouse);
 
 
 

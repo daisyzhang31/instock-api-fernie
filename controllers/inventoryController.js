@@ -78,5 +78,24 @@ exports.updateInventory = (req, res) => {
     })
     .catch((err) =>
       res.status(400).send(`Error updating Inventory ${req.params.id} ${err}`)
-    );}
+    );
+};
 
+
+// delete inventory by id
+
+exports.deleteInventory = (req, res) => {
+  knex("inventories")
+    .delete()
+    .where({ id: req.params.id })
+    .then(() => {
+      res
+        .status(200)
+        .send(`inventory with id: ${req.params.id} has been deleted`);
+    })
+    .catch((err) =>
+      res.status(400).send(`Error deleting Inventory ${req.params.id} ${err}`)
+    );
+};
+
+ 

@@ -94,6 +94,23 @@ exports.addWarehouse = (req, res) => {
 };
 
 
+// delete warehouse by id
+
+exports.deleteWarehouse = (req, res) => {
+  knex("warehouses")
+    .delete()
+    .where({ id: req.params.id })
+    .then(() => {
+      res
+        .status(200)
+        .send(`Warehouse with id: ${req.params.id} has been deleted`);
+    })
+    .catch((err) =>
+      res.status(400).send(`Error deleting Warehouse ${req.params.id} ${err}`)
+    );
+};
+
+
 
 
 

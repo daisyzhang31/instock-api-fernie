@@ -24,6 +24,7 @@ exports.inventoriesById = async (req, res) => {
 };
 
 
+
 exports.addInventory = (req, res) => {
   if (
     !req.body.warehouse_id ||
@@ -52,4 +53,30 @@ exports.addInventory = (req, res) => {
     })
     .catch((err) => res.status(400).send(`Error creating inventory:${err}`));
 };
+
+    
+
+exports.updateInventory = (req, res) => {
+  const obj = {
+    id: req.body.id,
+    warehouse_id: req.body.warehouse_id,
+    item_name: req.body.item_name,
+    description: req.body.description,
+    category: req.body.category,
+    status: req.body.status,
+    quantity: req.body.quantity,
+  };
+  knex("inventories")
+    .update(obj)
+    .where({ id: req.params.id })
+    .then((_data) => {
+      knex("inventories")
+        .where({ id: newInventoryId })
+        .then((data) => {
+          res.status(201).json(data[0]);
+        });
+    })
+    .catch((err) =>
+      res.status(400).send(`Error updating Inventory ${req.params.id} ${err}`)
+    );}
 

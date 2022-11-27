@@ -1,4 +1,5 @@
 const knex = require("knex")(require("../knexfile"));
+const { v4: uuidv4 } = require("uuid");
 
 exports.index = (_req, res) => {
   knex("inventories")
@@ -22,6 +23,39 @@ exports.inventoriesById = async (req, res) => {
   }
 };
 
+
+
+exports.addInventory = (req, res) => {
+  if (
+    !req.body.warehouse_id ||
+    !req.body.item_name ||
+    !req.body.description ||
+    !req.body.category ||
+    !req.body.status ||
+    !req.body.quantity
+  ) {
+    return res
+      .status(400)
+      .send(
+        "Please provide warehouseid, itemname, description,category, status and quantity."
+      );
+  }
+  const newInventoryId = uuidv4();
+
+  knex("inventories")
+    .insert({ ...req.body, id: newInventoryId })
+    .then((_data) => {
+      knex("inventories")
+        .where({ id: newInventoryId })
+        .then((data) => {
+          res.status(201).json(data[0]);
+        });
+    })
+    .catch((err) => res.status(400).send(`Error creating inventory:${err}`));
+};
+
+    
+
 exports.updateInventory = (req, res) => {
   const obj = {
     id: req.body.id,
@@ -37,9 +71,9 @@ exports.updateInventory = (req, res) => {
     .where({ id: req.params.id })
     .then((_data) => {
       knex("inventories")
-        .where({ id: req.params.id })
+        .where({ id: newInventoryId })
         .then((data) => {
-          res.status(200).json(data[0]);
+          res.status(201).json(data[0]);
         });
     })
     .catch((err) =>
@@ -63,3 +97,5 @@ exports.deleteInventory = (req, res) => {
       res.status(400).send(`Error deleting Inventory ${req.params.id} ${err}`)
     );
 };
+
+ 

@@ -18,9 +18,4 @@ router.route("/:id")
 .delete(warehouseController.deleteWarehouse);
 
 
-
-
-
-
-
 module.exports = router;

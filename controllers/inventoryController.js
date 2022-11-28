@@ -1,5 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 const { v4: uuidv4 } = require("uuid");
+const newInventoryId = uuidv4();
 
 exports.index = (_req, res) => {
   knex("inventories")
@@ -23,8 +24,6 @@ exports.inventoriesById = async (req, res) => {
   }
 };
 
-
-
 exports.addInventory = (req, res) => {
   if (
     !req.body.warehouse_id ||
@@ -39,7 +38,6 @@ exports.addInventory = (req, res) => {
         "Please provide warehouseid, itemname, description,category, status and quantity."
       );
   }
-  const newInventoryId = uuidv4();
 
   knex("inventories")
     .insert({ ...req.body, id: newInventoryId })
@@ -52,10 +50,25 @@ exports.addInventory = (req, res) => {
     })
     .catch((err) => res.status(400).send(`Error creating inventory:${err}`));
 };
-
-    
-
 exports.updateInventory = (req, res) => {
+  if (
+    !req.body.id ||
+    !req.body.warehouse_id ||
+    !req.body.item_name ||
+    !req.body.description ||
+    !req.body.category ||
+    !req.body.status ||
+    !req.body.quantity ||
+    !req.body.created_at ||
+    !req.body.updated_at
+  ) {
+    return res
+      .status(400)
+      .send(
+        "Please make sure to provide warehouse_name, address, city, country, contact_name, contact_position, contact_phone and contact_email fields in a request"
+      );
+  }
+
   const obj = {
     id: req.body.id,
     warehouse_id: req.body.warehouse_id,
@@ -70,17 +83,15 @@ exports.updateInventory = (req, res) => {
     .where({ id: req.params.id })
     .then((_data) => {
       knex("inventories")
-        .where({ id: newInventoryId })
+        .where({ id: req.params.id })
         .then((data) => {
-          res.status(201).json(data[0]);
+          res.status(200).json(data[0]);
         });
     })
     .catch((err) =>
       res.status(400).send(`Error updating Inventory ${req.params.id} ${err}`)
     );
 };
-
-
 // delete inventory by id
 
 exports.deleteInventory = (req, res) => {
@@ -96,5 +107,3 @@ exports.deleteInventory = (req, res) => {
       res.status(400).send(`Error deleting Inventory ${req.params.id} ${err}`)
     );
 };
-
- 

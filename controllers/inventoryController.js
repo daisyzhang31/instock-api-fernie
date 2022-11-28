@@ -31,8 +31,7 @@ exports.addInventory = (req, res) => {
     !req.body.item_name ||
     !req.body.description ||
     !req.body.category ||
-    !req.body.status ||
-    !req.body.quantity
+    !req.body.status
   ) {
     return res
       .status(400)

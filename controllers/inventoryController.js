@@ -51,24 +51,6 @@ exports.addInventory = (req, res) => {
     .catch((err) => res.status(400).send(`Error creating inventory:${err}`));
 };
 exports.updateInventory = (req, res) => {
-  if (
-    !req.body.id ||
-    !req.body.warehouse_id ||
-    !req.body.item_name ||
-    !req.body.description ||
-    !req.body.category ||
-    !req.body.status ||
-    !req.body.quantity ||
-    !req.body.created_at ||
-    !req.body.updated_at
-  ) {
-    return res
-      .status(400)
-      .send(
-        "Please make sure to provide warehouse_name, address, city, country, contact_name, contact_position, contact_phone and contact_email fields in a request"
-      );
-  }
-
   const obj = {
     id: req.body.id,
     warehouse_id: req.body.warehouse_id,

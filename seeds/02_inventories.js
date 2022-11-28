@@ -8,7 +8,7 @@ exports.seed = async function (knex) {
   await knex("inventories").insert([
     {
       id: "9b4f79ea-0e6c-4e59-8e05-afd933d0b3d3",
-      warehouse_id: "02922c286-16cd-4d43-ab98-c79f698aeab",
+      warehouse_id: "2922c286-16cd-4d43-ab98-c79f698aeab0",
       item_name: "Television",
       description:
         'This 50", 4K LED TV provides a crystal-clear picture and vivid colors.',
